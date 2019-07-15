@@ -13,11 +13,20 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class App {
     public static void main( String[] args ) {
-    	classicalStyle();
-    	dependencyInjectionStyle();
+    	//classicalStyle();
+    	//dependencyInjectionStyle();
+    	
+    	try(AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class)) {
+    		NotificationService kakaoService = applicationContext.getBean("kakaoService", NotificationService.class);
+    		kakaoService.sendNotification("01036155931", "Welcome to KAKAO Service");
+    		
+    		NotificationService smsService = applicationContext.getBean("smsService", NotificationService.class);
+    		smsService.sendNotification("01036155931", "Welcome to SMS Service");
+    	}
+    	
     }
     
-    private static void classicalStyle() {
+/*    private static void classicalStyle() {
     	
     	// 원래는 new를 해줘서 실행함
     	NotificationService notificationService = new SmsServiceImpl();
@@ -29,5 +38,5 @@ public class App {
             NotificationService notificationService = applicationContext.getBean(NotificationService.class);
             notificationService.sendNotification("01036155931", "Welcome to WAVUS Service");
         }
-    }
+    }*/
 }

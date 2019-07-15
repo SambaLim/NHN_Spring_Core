@@ -1,7 +1,10 @@
 package com.nhnent.edu.spring_core.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.nhnent.edu.spring_core.service.NotificationService;
 
+@Service("kakaoService")
 public class KakaoServiceImpl implements NotificationService {
 
 	@Override
