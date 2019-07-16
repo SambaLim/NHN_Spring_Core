@@ -1,6 +1,8 @@
 package com.nhnent.edu.spring_core;
 
 import com.nhnent.edu.spring_core.config.Config;
+import com.nhnent.edu.spring_core.domain.Member;
+import com.nhnent.edu.spring_core.service.MemberService;
 import com.nhnent.edu.spring_core.service.NotificationService;
 import com.nhnent.edu.spring_core.service.impl.KakaoServiceImpl;
 import com.nhnent.edu.spring_core.service.impl.SmsServiceImpl;
@@ -17,11 +19,15 @@ public class App {
     	//dependencyInjectionStyle();
     	
     	try(AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class)) {
-    		NotificationService kakaoService = applicationContext.getBean("kakaoService", NotificationService.class);
+
+    		MemberService memberService = applicationContext.getBean(MemberService.class);
+    		memberService.subscribe(new Member("임성호", "01036155931"));    		
+    		
+/*    		NotificationService kakaoService = applicationContext.getBean("kakaoService", NotificationService.class);
     		kakaoService.sendNotification("01036155931", "Welcome to KAKAO Service");
     		
     		NotificationService smsService = applicationContext.getBean("smsService", NotificationService.class);
-    		smsService.sendNotification("01036155931", "Welcome to SMS Service");
+    		smsService.sendNotification("01036155931", "Welcome to SMS Service");*/
     	}
     	
     }
