@@ -11,12 +11,20 @@ import com.nhnent.edu.spring_core.service.NotificationService;
 @Service
 public class MemberServiceImpl implements MemberService {
 	
-	@Autowired
+/*	@Autowired
 	private NotificationService smsService;
 	
 	@Autowired
 	@Qualifier("kakaoService")
+	private NotificationService kakaoService;*/
+	
+	private NotificationService smsService;
 	private NotificationService kakaoService;
+	
+	public MemberServiceImpl(NotificationService smsService, NotificationService kakaoService) {
+		this.smsService = smsService;
+		this.kakaoService = kakaoService;
+	}
 
 	@Override
 	public boolean subscribe(Member member) {
