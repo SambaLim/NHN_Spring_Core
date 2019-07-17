@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.nhnent.edu.spring_core.component.MemberService;
 import com.nhnent.edu.spring_core.domain.Member;
+import com.nhnent.edu.spring_core.repository.NotiLogDao;
 import com.nhnent.edu.spring_core.service.NotificationService;
 
 @Service
@@ -17,6 +18,9 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	@Qualifier("kakaoService")
 	private NotificationService kakaoService;
+	
+	@Autowired
+	private NotiLogDao notiLogDao;
 
 
 	@Override
@@ -28,10 +32,16 @@ public class MemberServiceImpl implements MemberService {
 		
         if (member.getPhoneNumber() != null && !member.getPhoneNumber().isEmpty()) {
             smsService.sendNotification(member.getPhoneNumber(), "Success to Subscribe");
+            
+            int logId = notiLogDao.insertLog(member, "sms");
+            System.out.println(notiLogDao.getLog(logId));
         }
 
         if (member.getPhoneNumber() != null && !member.getPhoneNumber().isEmpty()) {
             kakaoService.sendNotification(member.getPhoneNumber(), "Success to Subscribe");
+            
+            int logId = notiLogDao.insertLog(member, "kakao");
+            System.out.println(notiLogDao.getLog(logId));
         }
 		
 		return true;
