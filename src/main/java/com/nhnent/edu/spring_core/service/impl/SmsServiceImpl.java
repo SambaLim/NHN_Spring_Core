@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.nhnent.edu.spring_core.service.NotificationService;
 
-@Profile("dev")
+@Profile("default")
 @Service
 public class SmsServiceImpl implements NotificationService {
 
