@@ -17,8 +17,11 @@ import com.nhnent.edu.spring_core.repository.NotiLogDao;
 @Repository
 public class NotiLogDaoImpl implements NotiLogDao {
 	
-	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	public NotiLogDaoImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	} 
 
 	@Override
 	public int insertLog(Member member, String type) {

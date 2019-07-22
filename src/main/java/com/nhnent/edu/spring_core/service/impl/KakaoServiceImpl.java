@@ -1,10 +1,12 @@
 package com.nhnent.edu.spring_core.service.impl;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.nhnent.edu.spring_core.service.NotificationService;
 
-@Service("kakaoService")
+@Profile("production")
+@Service
 public class KakaoServiceImpl implements NotificationService {
 
 	@Override
@@ -14,6 +16,11 @@ public class KakaoServiceImpl implements NotificationService {
 		System.out.println("Success to send message");
 		
 		return true;
+	}
+
+	@Override
+	public String getType() {
+		return "kakao";
 	}
 	
 }

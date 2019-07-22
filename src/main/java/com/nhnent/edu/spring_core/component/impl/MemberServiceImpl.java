@@ -1,7 +1,5 @@
 package com.nhnent.edu.spring_core.component.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.nhnent.edu.spring_core.component.MemberService;
@@ -12,40 +10,30 @@ import com.nhnent.edu.spring_core.service.NotificationService;
 @Service
 public class MemberServiceImpl implements MemberService {
 	
-	@Autowired
-	private NotificationService smsService;
-	
-	@Autowired
-	@Qualifier("kakaoService")
-	private NotificationService kakaoService;
-	
-	@Autowired
-	private NotiLogDao notiLogDao;
+    private final NotificationService notificationService;
+
+    private final NotiLogDao notiLogDao;
 
 
-	@Override
-	public boolean subscribe(Member member) {
-		
-		if (member == null) {
-			throw new IllegalArgumentException("Member is null");
-		}
-		
+    public MemberServiceImpl(NotificationService notificationService, NotiLogDao notiLogDao) {
+        this.notificationService = notificationService;
+        this.notiLogDao = notiLogDao;
+    }
+
+
+    @Override
+    public boolean subscribe(Member member) {
+        if (member == null)
+            throw new IllegalArgumentException("Member is null");
+
         if (member.getPhoneNumber() != null && !member.getPhoneNumber().isEmpty()) {
-            smsService.sendNotification(member.getPhoneNumber(), "Success to Subscribe");
-            
-            int logId = notiLogDao.insertLog(member, "sms");
+            notificationService.sendNotification(member.getPhoneNumber(), "Success to Subscribe");
+            int logId = notiLogDao.insertLog(member, notificationService.getType());
             System.out.println(notiLogDao.getLog(logId));
         }
 
-        if (member.getPhoneNumber() != null && !member.getPhoneNumber().isEmpty()) {
-            kakaoService.sendNotification(member.getPhoneNumber(), "Success to Subscribe");
-            
-            int logId = notiLogDao.insertLog(member, "kakao");
-            System.out.println(notiLogDao.getLog(logId));
-        }
-		
-		return true;
-	}
+        return true;
+    }
 
 	@Override
 	public void init() {

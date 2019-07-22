@@ -44,7 +44,11 @@ public class DatabaseConfig {
 	@Bean
 	public JdbcTemplate jdbcTemplate() {
 		
-		return new JdbcTemplate(dataSource());
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource());
+		jdbcTemplate.setResultsMapCaseInsensitive(true);
+		
+		
+		return jdbcTemplate;
 	}
 	
 }
